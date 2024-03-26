@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Chatbot</title>
+	<link rel="icon" href="chatbot.gif" />
+	<link rel="stylesheet" href="style.css" />
+	
+</head>
+
+<body>
+	<div id="container" class="container">
+		<!-- <input type="text" id="inputData" placeholder="Enter data"> -->
+        <!-- <button onclick="makePrediction()">Predict</button> -->
+		<div id="predictionResult"></div>
+		<div id="chat" class="chat">
+			<div id="messages" class="messages"></div>
+			<input id="input" type="text" placeholder="Say something..." autocomplete="off" autofocus="true" />
+		</div>
+		<img src="chatbot.gif" alt="Robot cartoon" height="500vh">
+	</div>
+</body>
+
+<script>
+	function makePrediction() {
+		var data = document.getElementById('inputData').value;
+		fetch('/predict', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ 'data': data })
+		})
+		.then(response => response.json())
+		.then(data => {
+			document.getElementById('predictionResult').innerText = data.prediction;
+		})
+		.catch(error => console.error('Error:', error));
+	}
+</script>
+<script type="text/javascript" src="index.js" ></script>
+<script type="text/javascript" src="constants.js" ></script>
+<script type="text/javascript" src="speech.js" ></script>
+
+</html>
